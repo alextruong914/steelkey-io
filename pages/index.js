@@ -1,9 +1,33 @@
 import Head from 'next/head'
-import Image from 'next/image'
-import { checkout} from '../CheckoutForm'
-export default function Home() {
+import Header from '../components/Header'
+import Post from '../components/Post'
+import path from 'path'
+import matter from 'gray-matter'
+import { getIndexPage } from '../lib/api'
+import markdownToHtml from '../lib/markdownToHtml'
+import markdownStyles from './markdown-styles.module.css'
+// import Image from 'next/image'
+// import { checkout} from '../CheckoutForm'
+
+
+export default function Home({ post }) {
   return (
-    <div className="container">
+    <div>
+      <Head>
+        <title>Steel Key</title>
+      </Head>
+
+      {/* <div className='posts'>
+        {posts.map((post, index) => (
+          <Post key={index} post={post} />
+        ))}
+      </div> */}
+      <div
+        className={markdownStyles['markdown']}
+        dangerouslySetInnerHTML={{ __html: post.content }}
+      />
+    </div>
+    /*<div className="container">
       <Head>
         <title>Steel Key Webstore</title>
         <link rel="icon" href="/favicon.ico" />
@@ -20,7 +44,7 @@ export default function Home() {
 
         {/* <div id="checkout">
           <button>Pay now!</button>
-        </div> */}
+        </div>
 
         <div className="grid">
         <div>
@@ -210,6 +234,21 @@ export default function Home() {
           box-sizing: border-box;
         }
       `}</style>
-    </div>
+    </div> */
   )
+}
+
+
+export async function getStaticProps() {
+  const post = getIndexPage()
+  const content = await markdownToHtml(post.content || '')
+
+  return {
+    props: {
+      post: {
+        ...post,
+        content,
+      },
+    },
+  }
 }
