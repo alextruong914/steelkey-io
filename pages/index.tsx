@@ -1,9 +1,26 @@
 import Head from 'next/head'
 import Image from 'next/image'
 import { checkout} from '../CheckoutForm'
-export default function Home() {
+import { getIndexPage } from '../lib/api'
+import markdownToHtml from '../lib/markdownToHtml'
+import PostType from '../interfaces/post'
+import markdownStyles from './markdown-styles.module.css'
+
+type Props = {
+  post: PostType
+}
+
+export default function Index({ post }: Props) {
   return (
-    <div className="container">
+    <>
+      <head><title>Next.js Blog Example with me</title></head>
+    <div
+      className={markdownStyles['markdown']}
+      dangerouslySetInnerHTML={{ __html: post.content }}
+    />
+  </>
+    
+    /*<div className="container">
       <Head>
         <title>Steel Key Webstore</title>
         <link rel="icon" href="/favicon.ico" />
@@ -20,7 +37,7 @@ export default function Home() {
 
         {/* <div id="checkout">
           <button>Pay now!</button>
-        </div> */}
+        </div> }
 
         <div className="grid">
         <div>
@@ -210,6 +227,26 @@ export default function Home() {
           box-sizing: border-box;
         }
       `}</style>
-    </div>
+    </div>*/
   )
+}
+
+type Params = {
+  params: {
+    slug: string
+  }
+}
+
+export async function getStaticProps({ params }: Params) {
+  const post = getIndexPage()
+  const content = await markdownToHtml(post.content || '')
+
+  return {
+    props: {
+      post: {
+        ...post,
+        content,
+      },
+    },
+  }
 }
