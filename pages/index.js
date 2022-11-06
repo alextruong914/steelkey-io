@@ -27,6 +27,7 @@ export default function Home({ post }) {
       <div
         className={markdownStyles['markdown']}
         dangerouslySetInnerHTML={{ __html: post.content }}
+
       />
       <Link href="../checkOut">Buy Now</Link>
     </div>
