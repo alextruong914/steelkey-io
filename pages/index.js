@@ -8,6 +8,8 @@ import markdownToHtml from '../lib/markdownToHtml'
 import markdownStyles from './markdown-styles.module.css'
 // import Image from 'next/image'
 // import { checkout} from '../CheckoutForm'
+import Link from 'next/link'
+
 
 
 export default function Home({ post }) {
@@ -26,6 +28,7 @@ export default function Home({ post }) {
         className={markdownStyles['markdown']}
         dangerouslySetInnerHTML={{ __html: post.content }}
       />
+      <Link href="../checkOut">Buy Now</Link>
     </div>
     /*<div className="container">
       <Head>
