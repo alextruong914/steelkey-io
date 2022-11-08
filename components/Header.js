@@ -4,9 +4,9 @@ export default function Header() {
     return (
         <header>
             <div className='container'>
-                <Link href='/' passHref>
-                    <h2>Steel Key</h2>
-                </Link>
+                <h1>STRONG</h1>
+                <p>CHEAP SIMPLE</p>
+                <button class="btn-checkout"><Link href="../checkOut">Buy Now</Link></button>
             </div>
         </header>
     )
